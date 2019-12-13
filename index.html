@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Calorie Calculator</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Oxygen&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/functionShow.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Daily Calorie Calculator</h1>
+      <form id="myForm" action="#0">
+        <table>
+          <tr>
+            <td>Sex:</td>
+            <td>
+              <select name="sex-select" class="required" id="sex-select">
+                <option name="male" value="male" id="male">Male</option>
+                <option name="female" value="female" id="female">Female</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Age:</td>
+            <td>
+              <input
+                type="text"
+                id="age"
+                name="age"
+                class="required"
+                minlength="1"
+                maxlength="3"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Weight in pounds:</td>
+            <td>
+              <input
+                type="text"
+                id="weight"
+                name="weight"
+                minlength="1"
+                maxlength="3"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Height in inches:</td>
+            <td>
+              <input
+                type="text"
+                id="height"
+                name="height"
+                minlength="1"
+                maxlength="3"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Activity Level:</td>
+            <td>
+              <select
+                name="activity-select"
+                class="required"
+                id="activity-level"
+              >
+                <option name="sedentary" value="sedentary" id="sedentary"
+                  >Sedentary</option
+                >
+                <option
+                  name="lightly-active"
+                  value="lightly-active"
+                  id="lightly-active"
+                  >Lightly Active</option
+                >
+                <option
+                  name="moderately-active"
+                  value="moderately-active"
+                  id="moderately-active"
+                  >Moderately Active</option
+                >
+                <option name="very-active" value="very-active" id="very-active"
+                  >Very Active</option
+                >
+                <option
+                  name="extremely-active"
+                  value="extremely-active"
+                  id="extremely-active"
+                  >Extremely Active</option
+                >
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: center">
+              <button
+                type="submit"
+                id="button-01"
+                name="submit"
+                onclick="checkEmptyValues();"
+              >
+                Calculate Calories!
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: center">
+              <button type="submit" class="reload" id="reload">
+                Recalculate
+              </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+      <p id="result"></p>
+    </div>
+    <!--end of container-->
+
+    <button class="suggestion-button" id="button-02" onclick="showImages()">
+      Show me some food suggestions!
+    </button>
+    <br />
+    <!-- weight must be between 6lb and 500lb, allows integers only, 3 chars max (error message for "please enter valid number between x and y. Please round to nearest whole number") -->
+    <!-- height in inches must be reasonable 5 - 84", 2 characters max (error message says "please enter valid number between 5 and 84 rounded to the nearest whole number") -->
+    <!-- activity level must be selected, tool tip for each selection or an aside -->
+    <!-- submit button sends calculation and returns CALORIES and photos of calories  -->
+    <!-- where calories assuming maintain weight = 
+    if sedentary = BMR x *1.2
+    if light     = BMR x *1.375
+    if moderate  = BMR x *1.55
+    if very activ= BMR x *1.725
+    if extremely = BMR x *1.9
+        (* means fixed variable)
+    BMR =
+    if male = *66* + (*6.3* * weight) +  (*12.9 * height) - (*6.8* * age)
+    if female = *655 + (*4.3 x weight) + (*4.7 x height) - *4.7 x age) 
+    lose weight generally: lower by 500 kcal, BUT not more than (CALORIES - 1000) -->
+
+    <script>
+      jQuery.validator.setDefaults({
+        debug: true,
+        success: "valid"
+      });
+      $("#myForm").validate({
+        rules: {
+          age: {
+            range: [1, 120],
+            minlength: 1,
+            maxlength: 3,
+            required: true
+          },
+
+          weight: {
+            range: [5, 500],
+            required: true
+          },
+          height: {
+            range: [10, 100],
+            required: true
+          }
+        }
+      });
+      $("#reload").click(function() {
+        location.reload();
+      });
+    </script>
+  </body>
+</html>
